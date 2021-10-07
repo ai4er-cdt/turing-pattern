@@ -25,8 +25,9 @@ def run():
     p.add_argument("--url", type=str, metavar="FILENAME", help="File name or URL")
     p.add_argument("-r", nargs=2, metavar=("r0", "r1"),
                    type=float, help="Gaussian radius")
+    p.add_argument("-n", nargs="?", type=int, help="Iteration Num", default=10)
     args = p.parse_args()
-    print(args.r, args.url)
+    print(args.r, args.url, args.n)
     if args.r:
         r0, r1 = args.r
     else:
@@ -48,7 +49,7 @@ def run():
     print(phi.shape)
 
     # Run for a few steps
-    for i in range(15):
+    for i in range(args.n):
         phi = update(phi, r0, r1)
 
     # Smooth the result a little
