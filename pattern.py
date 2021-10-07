@@ -25,7 +25,7 @@ def run():
     p.add_argument("--url", type=str, metavar="FILENAME", help="File name or URL")
     p.add_argument("-r", nargs=2, metavar=("r0", "r1"),
                    type=float, help="Gaussian radius")
-    p.add_argument("-n", nargs="?", type=int, help="Iteration Num", default=10)
+    p.add_argument("-n", nargs="?", type=int, help="Iteration Num", default=5)
     args = p.parse_args()
     print(args.r, args.url, args.n)
     if args.r:
