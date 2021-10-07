@@ -26,7 +26,7 @@ def run():
     p.add_argument("--colour", type=str, metavar="COLOURMAP", help="Name of the matplotlib colourscheme", default="magma")
     p.add_argument("-r", nargs=2, metavar=("r0", "r1"),
                    type=float, help="Gaussian radius")
-    p.add_argument("-n", type=int, metavar="NUMITERATIONS", help="Number of Iterations")
+    p.add_argument("-n", nargs="?", type=int, help="Iteration Num", default=5)
     args = p.parse_args()
     print(args.r, args.url, args.n)
     if args.r:
@@ -50,11 +50,7 @@ def run():
     print(phi.shape)
 
     # Run for a few steps
-    if args.n:
-        n = args.n
-    else:
-        n = 15
-    for i in range(n):
+    for i in range(args.n):
         phi = update(phi, r0, r1)
 
     # Smooth the result a little
