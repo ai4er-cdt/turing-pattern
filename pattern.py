@@ -23,6 +23,7 @@ def update(phi, r0, r1):
 def run():
     p = argparse.ArgumentParser()
     p.add_argument("--url", type=str, metavar="FILENAME", help="File name or URL")
+    p.add_argument("--colour", type=str, metavar="COLOURMAP", help="Name of the matplotlib colourscheme", default="magma")
     p.add_argument("-r", nargs=2, metavar=("r0", "r1"),
                    type=float, help="Gaussian radius")
     args = p.parse_args()
@@ -55,5 +56,5 @@ def run():
     phi = gaussian_filter(phi, sigma=2.0, mode='wrap')
 
     # plt.figure(figsize=(16,16))
-    plt.imshow(phi, cmap='magma')
+    plt.imshow(phi, cmap=args.colour)
     plt.show()
