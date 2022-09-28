@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from scipy.ndimage.filters import gaussian_filter
+from scipy.ndimage import gaussian_filter
 from PIL import Image
 import numpy
 import requests
@@ -11,7 +11,6 @@ def update(phi, r0, r1):
     p = gaussian_filter(phi, sigma=r0, mode='wrap')
     q = gaussian_filter(phi, sigma=r1, mode='wrap')
     u = dt*(q > p) - dt*(p > q)
-#     u = dt*numpy.tanh(30*(q - p))
     phi += u
 
     # Normalise phi in range [-1, 1]
@@ -54,6 +53,8 @@ def run():
     # Smooth the result a little
     phi = gaussian_filter(phi, sigma=2.0, mode='wrap')
 
-    # plt.figure(figsize=(16,16))
     plt.imshow(phi, cmap='magma')
     plt.show()
+
+
+run()
