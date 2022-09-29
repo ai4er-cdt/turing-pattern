@@ -44,6 +44,7 @@ def run():
         phi = numpy.sum(phi, axis=2)
 
     plt.imshow(phi, cmap="gray")
+
     plt.show()
     print(phi.shape)
 
