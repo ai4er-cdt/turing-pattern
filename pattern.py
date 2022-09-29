@@ -42,7 +42,7 @@ def run():
     if len(phi.shape) == 3:
         phi = numpy.sum(phi, axis=2)
 
-    plt.imshow(phi, cmap='gray')
+    plt.imshow(phi, cmap='magma')
     plt.show()
     print(phi.shape)
 
