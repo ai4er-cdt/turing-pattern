@@ -1,9 +1,10 @@
-import matplotlib.pyplot as plt
-from scipy.ndimage import gaussian_filter
-from PIL import Image
 import numpy
+import matplotlib.pyplot as plt
 import requests
 import argparse
+
+from PIL import Image
+from scipy.ndimage import gaussian_filter
 
 
 def update(phi, r0, r1):
