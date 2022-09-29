@@ -1,20 +1,21 @@
-import matplotlib.pyplot as plt
-from scipy.ndimage import gaussian_filter
-from PIL import Image
 import numpy
+import matplotlib.pyplot as plt
 import requests
 import argparse
+
+from PIL import Image
+from scipy.ndimage import gaussian_filter
 
 
 def update(phi, r0, r1):
     dt = 0.1
-    p = gaussian_filter(phi, sigma=r0, mode='wrap')
-    q = gaussian_filter(phi, sigma=r1, mode='wrap')
-    u = dt*(q > p) - dt*(p > q)
+    p = gaussian_filter(phi, sigma=r0, mode="wrap")
+    q = gaussian_filter(phi, sigma=r1, mode="wrap")
+    u = dt * (q > p) - dt * (p > q)
     phi += u
 
     # Normalise phi in range [-1, 1]
-    phi = 2.0*(phi - phi.min())/phi.ptp() - 1.0
+    phi = 2.0 * (phi - phi.min()) / phi.ptp() - 1.0
 
     return phi
 
@@ -34,15 +35,16 @@ def run():
         url = args.url
         phi = Image.open(requests.get(url, stream=True).raw)
         w, h = phi.size
-        phi = phi.resize((w*4, h*4), Image.ANTIALIAS)
+        phi = phi.resize((w * 4, h * 4), Image.ANTIALIAS)
     else:
-        phi = numpy.random.rand(400,400)
+        phi = numpy.random.rand(400, 400)
 
     phi = numpy.array(phi, dtype=numpy.float32)
     if len(phi.shape) == 3:
         phi = numpy.sum(phi, axis=2)
 
-    plt.imshow(phi, cmap='magma')
+    plt.imshow(phi, cmap="gray")
+
     plt.show()
     print(phi.shape)
 
@@ -51,10 +53,11 @@ def run():
         phi = update(phi, r0, r1)
 
     # Smooth the result a little
-    phi = gaussian_filter(phi, sigma=2.0, mode='wrap')
+    phi = gaussian_filter(phi, sigma=2.0, mode="wrap")
 
     plt.imshow(phi, cmap='rainbow')
     plt.show()
 
 
-run()
+if __name__ == "__main__":
+    run()
