@@ -53,7 +53,7 @@ def run():
     # Smooth the result a little
     phi = gaussian_filter(phi, sigma=2.0, mode='wrap')
 
-    plt.imshow(phi, cmap='magma')
+    plt.imshow(phi, cmap='rainbow')
     plt.show()
 
 
