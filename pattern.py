@@ -6,6 +6,8 @@ import argparse
 from PIL import Image
 from scipy.ndimage import gaussian_filter
 
+from typing import Optional, Tuple
+
 
 def update(phi, r0, r1):
     dt = 0.1
@@ -20,14 +22,19 @@ def update(phi, r0, r1):
     return phi
 
 
-def run():
+def arg_parse():
     p = argparse.ArgumentParser()
     p.add_argument("--url", type=str, metavar="FILENAME", help="File name or URL")
     p.add_argument("-r", nargs=2, metavar=("r0", "r1"),
                    type=float, help="Gaussian radius")
     args = p.parse_args()
     print(args.r, args.url)
-    if args.r:
+    return args
+
+
+def run(r: Optional[Tuple[float, float]], url: str):
+
+    if r:
         r0, r1 = args.r
     else:
         r0, r1 = 5, 4
@@ -59,4 +66,5 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    args = arg_parse()
+    run(args.r, args.url)
