@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import matplotlib.pyplot as plt
 import requests
 import argparse
@@ -9,7 +9,23 @@ from scipy.ndimage import gaussian_filter
 from typing import Optional, Tuple
 
 
-def update(phi, r0, r1):
+def update(phi: np.ndarray, r0: float, r1: float) -> np.ndarray:
+    """
+    Helper function to update the image to create the turing pattern
+    Parameters
+    ----------
+    phi : np.ndarray,
+        array of the image to use
+    r0 : float,
+        radius for the gaussian filter
+    r1 : float,
+        radius for the gaussian filter
+
+    Returns
+    -------
+    phi: np.ndarray,
+        updated image
+    """
     dt = 0.1
     p = gaussian_filter(phi, sigma=r0, mode="wrap")
     q = gaussian_filter(phi, sigma=r1, mode="wrap")
@@ -23,6 +39,7 @@ def update(phi, r0, r1):
 
 
 def arg_parse():
+    """function for argument parsing"""
     p = argparse.ArgumentParser()
     p.add_argument("--url", type=str, metavar="FILENAME", help="File name or URL")
     p.add_argument("-r", nargs=2, metavar=("r0", "r1"),
@@ -32,23 +49,34 @@ def arg_parse():
     return args
 
 
-def run(r: Optional[Tuple[float, float]], url: str):
+def run(r: Optional[Tuple[float, float]], url: Optional[str]) -> None:
+    """
+    Generating turing pattern from an image.
 
+    Parameters
+    ----------
+    r : tuple of floats, optional,
+        tuple of the radii for the gaussian filter
+
+    url : str, optional,
+        url or path of the image
+        if None, random image is used
+    """
     if r:
-        r0, r1 = args.r
+        r0, r1 = r
     else:
         r0, r1 = 5, 4
-    if args.url:
-        url = args.url
+
+    if url:
         phi = Image.open(requests.get(url, stream=True).raw)
         w, h = phi.size
         phi = phi.resize((w * 4, h * 4), Image.ANTIALIAS)
     else:
-        phi = numpy.random.rand(400, 400)
+        phi = np.random.rand(400, 400)
 
-    phi = numpy.array(phi, dtype=numpy.float32)
+    phi = np.array(phi, dtype=np.float32)
     if len(phi.shape) == 3:
-        phi = numpy.sum(phi, axis=2)
+        phi = np.sum(phi, axis=2)
 
     plt.imshow(phi, cmap="gray")
     plt.show()
