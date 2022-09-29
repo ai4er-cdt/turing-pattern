@@ -5,9 +5,10 @@ import numpy
 import requests
 import argparse
 
-
 def update(phi, r0, r1):
-    dt = 0.1
+    # NOTE change the param
+    # dt = 0.1
+    dt = 0.2
     p = gaussian_filter(phi, sigma=r0, mode='wrap')
     q = gaussian_filter(phi, sigma=r1, mode='wrap')
     u = dt*(q > p) - dt*(p > q)
