@@ -42,7 +42,7 @@ def run():
     if len(phi.shape) == 3:
         phi = numpy.sum(phi, axis=2)
 
-    plt.imshow(phi, cmap='gray')
+    plt.imshow(phi, cmap='inferno')
     plt.show()
     print(phi.shape)
 
@@ -53,7 +53,7 @@ def run():
     # Smooth the result a little
     phi = gaussian_filter(phi, sigma=2.0, mode='wrap')
 
-    plt.imshow(phi, cmap='magma')
+    plt.imshow(phi, cmap='Inferno')
     plt.show()
 
 
